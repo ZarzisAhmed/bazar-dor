@@ -1,5 +1,10 @@
 "use client";
+
+import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useSyncExternalStore } from "react";
+
 import logo from "@/images/logo-icon.png";
 import rice from "@/images/Nav/🍚.svg";
 import tel from "@/images/Nav/🛢️.svg";
@@ -9,8 +14,6 @@ import mach from "@/images/Nav/🐟.svg";
 import dudh from "@/images/Nav/🥛.svg";
 import mangsho from "@/images/Nav/🍗.svg";
 import moshle from "@/images/Nav/🌶️.svg";
-import Link from "next/link";
-import { useSyncExternalStore } from "react";
 
 const subscribe = () => () => {};
 
@@ -22,6 +25,17 @@ const getDate = () =>
     year: "numeric",
   });
 
+const categories = [
+  { name: "চাল", icon: rice },
+  { name: "ডাল", icon: dal },
+  { name: "তেল", icon: tel },
+  { name: "সবজি", icon: shobji },
+  { name: "মাছ", icon: mach },
+  { name: "মাংস", icon: mangsho },
+  { name: "ডিম-দুধ", icon: dudh },
+  { name: "মসলা", icon: moshle },
+];
+
 const NavBar = () => {
   const formattedDate = useSyncExternalStore(subscribe, getDate, () => "");
 
@@ -32,17 +46,17 @@ const NavBar = () => {
         <div className="shadow-sm">
           <div className="navbar container mx-auto">
             <div className="navbar-start">
-              {/* Mobile Menu */}
-              <div className="dropdown">
+              {/* Mobile Hamburger Menu */}
+              <div className="dropdown dropdown-start lg:hidden">
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost lg:hidden"
+                  className="btn btn-ghost"
+                  aria-label="Open navigation menu"
                 >
                   <svg
-                    aria-label="Menu"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
+                    className="h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -55,6 +69,29 @@ const NavBar = () => {
                     />
                   </svg>
                 </div>
+
+                {/* Dropdown Categories */}
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-white rounded-box z-50 mt-3 w-56 p-2 shadow-lg"
+                >
+                  {categories.map((category) => (
+                    <li key={category.name}>
+                      <Link
+                        href="/"
+                        className="flex flex-row items-center gap-3"
+                      >
+                        <Image
+                          src={category.icon}
+                          alt={category.name}
+                          width={22}
+                          height={22}
+                        />
+                        <span>{category.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Logo and Website Name */}
@@ -68,11 +105,13 @@ const NavBar = () => {
                 />
 
                 <div className="px-3">
-                  <Link href="/" className="text-xl font-semibold">
+                  <Link href="/" className="text-sm sm:text-xl font-semibold">
                     বাজার দর
                   </Link>
 
-                  <h1 className="text-sm text-gray-500">{formattedDate}</h1>
+                  <h1 className="text-[10px] sm:text-sm text-gray-500">
+                    {formattedDate}
+                  </h1>
                 </div>
               </div>
             </div>
@@ -88,40 +127,23 @@ const NavBar = () => {
           </div>
         </div>
 
-        {/* Category Navigation */}
-        <div className="container mx-auto py-2 flex gap-5">
-          <Link href="/" className="flex gap-2 items-center">
-            <Image src={rice} alt="চাল" height={20} width={20} />
-            <span>চাল</span>
-          </Link>
-          <Link href="/" className="flex gap-2 items-center">
-            <Image src={dal} alt="চাল" height={20} width={20} />
-            <span>ডাল</span>
-          </Link>
-          <Link href="/" className="flex gap-2 items-center">
-            <Image src={tel} alt="চাল" height={20} width={20} />
-            <span>তেল</span>
-          </Link>
-          <Link href="/" className="flex gap-2 items-center">
-            <Image src={shobji} alt="চাল" height={20} width={20} />
-            <span>সবজি</span>
-          </Link>
-          <Link href="/" className="flex gap-2 items-center">
-            <Image src={mach} alt="চাল" height={20} width={20} />
-            <span>মাছ</span>
-          </Link>
-          <Link href="/" className="flex gap-2 items-center">
-            <Image src={mangsho} alt="চাল" height={20} width={20} />
-            <span>মাংস</span>
-          </Link>
-          <Link href="/" className="flex gap-2 items-center">
-            <Image src={dudh} alt="চাল" height={20} width={20} />
-            <span>ডিম-দুধ</span>
-          </Link>
-          <Link href="/" className="flex gap-2 items-center">
-            <Image src={moshle} alt="চাল" height={20} width={20} />
-            <span>মসলা</span>
-          </Link>
+        {/* Desktop Category Navigation */}
+        <div className="container mx-auto py-2 hidden lg:flex gap-5">
+          {categories.map((category) => (
+            <Link
+              href="/"
+              key={category.name}
+              className="flex gap-2 items-center"
+            >
+              <Image
+                src={category.icon}
+                alt={category.name}
+                height={20}
+                width={20}
+              />
+              <span>{category.name}</span>
+            </Link>
+          ))}
         </div>
       </div>
     </div>
