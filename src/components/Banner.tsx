@@ -17,7 +17,7 @@ const Banner = () => {
   const formattedDate = useSyncExternalStore(subscribe, getDate, () => "");
 
   return (
-    <div className="mx-auto max-w-xs  bg-white p-10 rounded-2xl flex-col items-center justify-center  sm:container sm:mx-auto my-3 sm:grid sm:grid-cols-3">
+    <div className="mx-3 shadow-sm  bg-white p-10 rounded-2xl flex-col items-center justify-center  sm:container sm:mx-auto my-3 sm:grid sm:grid-cols-3">
       <div className="col-span-2 space-y-8">
         <span className="px-2 py-0.5 bg-green-200 text-green-800 rounded-2xl">
           {formattedDate}

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="bn" data-theme="light" className={notoSansBengali.className}>
-      <body className="min-h-full flex flex-col bg-green-100">
+      <body className="min-h-full flex flex-col bg-green-50">
         <NavBar></NavBar>
         <Suspense fallback={"Loading..."}>
           <Marque></Marque>
